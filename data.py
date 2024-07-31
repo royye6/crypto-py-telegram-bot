@@ -38,6 +38,7 @@ def format_data():
             print("Could not deserialize json data", e)
 
         if coins_data.get('data'):
+            formatted_data = []
 
             for coin in coins_data['data']['coins']:
                 name = coin.get('name', "")
@@ -45,7 +46,19 @@ def format_data():
                 price = float(coin.get('price', 0.0),)
                 change = float(coin.get('change', 0.0))
                 zar = float(price*rate)         
-                print(f"\nName: {name}\n\nSymbol: {symbol}\n\nPrice (USD): $ {price:.2f}\n\nPrice (ZAR): R {zar:.2f} \n\nChange: {change:.2f}%\n")
+                
+            # return f"\nName: {name}\n\nSymbol: {symbol}\n\nPrice (USD): $ {price:.2f}\n\nPrice (ZAR): R {zar:.2f} \n\nChange: {change:.2f}%\n"
+                
+                coin_info = {
+                    "name": name,
+                    "symbol": symbol,
+                    "price_usd": price,
+                    "price_zar": zar,
+                    "change": change,
+                }
+                formatted_data.append(coin_info)
+             
+            return formatted_data
                 
         else:
             print("No data found in response")
